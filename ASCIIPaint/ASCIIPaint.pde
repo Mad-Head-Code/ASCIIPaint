@@ -1,7 +1,8 @@
-String arr[][] = new String[64][64];
-String brush = "*";
-String abrush = " ";
+char arr[][] = new char[64][64];
+char brush = '*';
+char abrush = ' ';
 PFont font;
+char e=0;
 void setup() {
   size(800, 640);
   noCursor();
@@ -9,7 +10,7 @@ void setup() {
   textFont(font);
   for (int y = 0; y<64; y++) {
     for (int x = 0; x<64; x++) {
-      arr[y][x] = " ";
+      arr[y][x] = ' ';
     }
   }
 }
@@ -21,6 +22,22 @@ void draw() {
   text("_",(mouseX+5)/10*10,(mouseY+5)/10*10);
   text("BRUSH :["+brush+"]",700,60);
   text("ABRUSH:["+abrush+"]",700,70);
+  text("[COPY]",680,610);
+  text("[PASTE]",730,610);
+  char s = (char)(e);
+  for (int y = 0; y<48; y++) {
+    for (int x = 0; x<16; x++) {
+      text(s++, 650+x*10, 100+y*10);
+      if(dist(((mouseX+5)/10)*10,((mouseY+5)/10)*10,650+x*10, 100+y*10)<5 && mousePressed){
+        if(mouseButton == LEFT){
+          brush = (char)(s-1);
+        }
+        if(mouseButton == RIGHT){
+          abrush = (char)(s-1);
+        }
+      }
+    }
+  }
   for (int y = 0; y<64; y++) {
     text("||",640,(y+1)*10);
     for (int x = 0; x<64; x++) {
@@ -37,10 +54,11 @@ void draw() {
   }
 }
   void keyPressed(){
-    if(keyCode == UP){brush = ""+char(brush.charAt(0)+1);}
-    if(keyCode == DOWN){brush = ""+char(brush.charAt(0)-1);}
-    if(keyCode == LEFT){abrush = ""+char(abrush.charAt(0)+1);}
-    if(keyCode == RIGHT){abrush = ""+char(abrush.charAt(0)-1);}
-  
+    if(keyCode == UP){brush++;}
+    if(keyCode == DOWN){brush--;}  
+    if(keyCode == LEFT){abrush++;}
+    if(keyCode == RIGHT){abrush--;}
+    if(key=='1' && e>0){e-=16;}
+    if(key=='3' && e<680){e+=16;}
   
 }
